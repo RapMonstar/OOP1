@@ -1,0 +1,155 @@
+#include <iostream>
+#include <string>
+using namespace std;
+void checkYear(int year, int month);
+void check(int month, int year, int dayweek, int day);
+class Data {
+public:
+
+	Data(int valueDay, int valueMonth, int valueYear)// int valueX, int valueDayweek)
+	{
+		//dayweek = valueDayweek;
+		//x = valueX;
+		 day = valueDay;
+		 month = valueMonth;
+		 year = valueYear;
+		  x = 0;
+		  dayweek = 0;
+	}
+
+	Data() {
+		day = -1;
+		month = -1;
+		year = -1;
+		dayweek = -1;
+		x = -1;
+	}
+	
+
+	~Data() {
+		cout << "Вызван деструктор!" << endl;
+	}
+
+	string to_String() {
+		string str1;
+		str1 += "Введенная дата: " + to_string(day) + ".0" + to_string(month) + '.' + to_string(year)+ ' ';
+		return str1;
+	}
+
+	
+	
+	void Output()
+	{
+		//cout << "Введенная дата: " << day << "." << 0 << month << "." << year << endl << endl;
+
+		cout << to_String() << endl << endl;
+		check(month, year, dayweek, day);
+		checkYear(year, month);
+
+		string s;
+		switch (month) {
+		case 1: s= "в январе 31 день";
+			break;
+		case 3: s = "в марте 31 день ";
+			break;
+		case 4: s = "в апреле 30 дней";
+			break;
+		case 5: s = "в апреле 30 дней";
+			break;
+		case 6: s = "в июне 30 дней ";
+			break;
+		case 7: s = "в июле 31 день";
+			break;
+		case 8: s = " в августе 31 день";
+			break;
+		case 9: s = " в сентябре 30 дней ";
+			break;
+		case 10: s = " в окбяре 31 день ";
+			break;
+		case 11: s = "в ноябре 30 дней ";
+			break;
+		case 12: s = "в декабре 31 день ";
+			break;
+		}
+		cout << s;
+	}
+
+	int GetX() {
+		return x;
+	}
+	void SetX(int valueX) {
+		x = valueX;
+	}
+	
+
+private:
+    int x;
+	int dayweek;
+	int day;
+	int month;
+	int year;
+	};
+
+
+
+
+	void check(int month, int year, int dayweek, int day) {
+		int a;
+		a = (14 - month) / 12;
+		year = year - a;
+		month = month + 12 * a - 2;
+		dayweek = 7000 + (day + year + year / 4 - year / 100 + year / 400 + (31 * month) / 12);
+		dayweek = dayweek % 7;
+		
+		string dayString; 
+		switch (dayweek) {
+		case 1: 
+			dayString = "это понедельник" ;
+			break;
+		case 2: 
+			dayString = "это вторник";
+			break;
+		case 3: 
+			dayString = "это среда";
+			break;
+		case 4: 
+			dayString = "это четверг ";
+			break;
+		case 5: 
+			dayString = "это пятница " ;
+			break;
+		case 6: 
+			dayString = "это суббота " ;
+			break;
+		case 7: 
+			dayString = "это воскресенье ";
+			break;
+		}
+		cout << dayString;
+
+	}
+
+
+	void checkYear(int year, int month) {
+		if (year % 4 == 0 && month == 2) 
+			cout << "в феврале високосного года 29 дней" << endl;	
+		else if (year % 4 == 0)
+			cout << year << " Bисокосный" << endl;
+		else
+			cout << year << " " << "год не високосный" << endl;
+	}
+
+
+	int main()
+	{
+		setlocale(0, "");
+		//Вписывать месяц нужно цифрой без нуля вначале
+		if (true) {
+			Data d(13, 2, 2020);
+			d.Output();
+			d.SetX(13);
+			cout << d.GetX();
+		}
+		cin.ignore(255, '\n').get();
+		return 0;
+	}
